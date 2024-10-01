@@ -9,6 +9,8 @@
 - Hibernate (para mapeamento objeto-relacional)
 - JDBC (para conexão com banco de dados)
 - MySQL (banco de dados)
+- JUnit (para testes unitários)
+- Mockito (para testes com mocks)
 
 ## Time de Desenvolvedores
 - Jose Victor. (Desenvolvedor)
