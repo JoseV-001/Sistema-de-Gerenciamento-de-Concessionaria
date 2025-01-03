@@ -27,6 +27,6 @@ Este sistema tem como objetivo gerenciar as operações de uma concessionária d
 - **Dashboard**: Interface para visualização do estoque e vendas.
 
 ## Estado Atual
--Estrutura inicial do projeto: Front-end com HTML, CSS e JavaScript para validar formulários e interagir com o usuário.
--Faltando: Implementação da conexão com o banco de dados, ajustes de layout, e inclusão dos botões para atualizar, deletar e preencher dados.
+- **Estrutura inicial do projeto**: Front-end com HTML, CSS e JavaScript para validar formulários e interagir com o usuário.
+- **Faltando**: Implementação da conexão com o banco de dados, ajustes de layout, e inclusão dos botões para atualizar, deletar e preencher dados.
   
