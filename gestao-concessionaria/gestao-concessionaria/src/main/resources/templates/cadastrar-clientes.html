@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Cadastrar Cliente</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://via.placeholder.com/1920x1080'); /* Imagem de fundo */
+            background-size: cover;
+            background-position: center;
+            color: #e1e1e1;
+            border-top: 5px solid #ff9800;
+            border-bottom: 5px solid #ff9800;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-container {
+            position: relative;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+        }
+        h1 {
+            color: #ff9800;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        .form-label {
+            color: #f8f9fa;
+        }
+        .btn {
+            background-color: #ff9800;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+            margin: 5px 0;
+        }
+        .btn:hover {
+            background-color: #e6892e;
+        }
+        table {
+            width: 100%;
+            margin-top: 30px;
+        }
+        table th, table td {
+            text-align: center;
+            padding: 10px;
+        }
+        table th {
+            background-color: #ff9800;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-container">
+        <h1>Cadastrar Cliente</h1>
+
+        <form id="clientForm">
+            <div class="mb-3">
+                <label class="form-label" for="nome">Nome</label>
+                <input class="form-control" id="nome" name="nome" required type="text" placeholder="Ex: João da Silva">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="cpf">CPF</label>
+                <input class="form-control" id="cpf" name="cpf" required type="text" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="Ex: 123.456.789-10">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="endereco">Endereço</label>
+                <input class="form-control" id="endereco" name="endereco" required type="text" placeholder="Ex: Rua Exemplo, 123">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="cep">CEP</label>
+                <input class="form-control" id="cep" name="cep" required type="text" pattern="\d{5}-\d{3}" placeholder="Ex: 12345-678">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="telefone">Telefone</label>
+                <input class="form-control" id="telefone" name="telefone" required type="text" placeholder="Ex: (XX) XXXXX-XXXX" pattern="^\(\d{2}\) \d{5}-\d{4}$">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="email">Gmail</label>
+                <input class="form-control" id="email" name="email" required type="email" placeholder="Ex: email@dominio.com">
+            </div>
+            <button class="btn" type="submit">Cadastrar</button>
+        </form>
+
+        <a class="btn btn-secondary" href="/" style="display:block; margin-top: 15px;">Voltar</a>
+
+        <h2 class="mt-5 text-center">Clientes Cadastrados</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                    <th>Endereço</th>
+                    <th>CEP</th>
+                    <th>Telefone</th>
+                    <th>Gmail</th>
+                </tr>
+            </thead>
+            <tbody id="clientTableBody">
+                <!-- As informações serão inseridas aqui pelo JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        const form = document.getElementById('clientForm');
+        const tableBody = document.getElementById('clientTableBody');
+
+        let clients = [];
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const nome = document.getElementById('nome').value;
+            const cpf = document.getElementById('cpf').value;
+            const endereco = document.getElementById('endereco').value;
+            const cep = document.getElementById('cep').value;
+            const telefone = document.getElementById('telefone').value;
+            const email = document.getElementById('email').value;
+
+            const client = { nome, cpf, endereco, cep, telefone, email };
+            clients.push(client);
+
+            renderTable();
+            form.reset();
+        });
+
+        function renderTable() {
+            tableBody.innerHTML = '';
+
+            clients.forEach(client => {
+                const row = document.createElement('tr');
+
+                Object.values(client).forEach(value => {
+                    const td = document.createElement('td');
+                    td.textContent = value;
+                    row.appendChild(td);
+                });
+
+                tableBody.appendChild(row);
+            });
+        }
+    </script>
+
+</body>
+</html>
