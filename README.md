@@ -26,7 +26,7 @@ Este sistema tem como objetivo gerenciar as operações de uma concessionária d
 - **Venda de veículos**: Atualização do status dos veículos vendidos e emissão de notas fiscais.
 - **Dashboard**: Interface para visualização do estoque e vendas.
 
-  ##Estadi Atual
-  -Estrutura inicial do projeto: Front-end com HTML, CSS e JavaScript para validar formulários e interagir com o usuário.
-  -Faltando: Implementação da conexão com o banco de dados, ajustes de layout, e inclusão dos botões para atualizar, deletar e preencher dados.
+## Estado Atual
+-Estrutura inicial do projeto: Front-end com HTML, CSS e JavaScript para validar formulários e interagir com o usuário.
+-Faltando: Implementação da conexão com o banco de dados, ajustes de layout, e inclusão dos botões para atualizar, deletar e preencher dados.
   
