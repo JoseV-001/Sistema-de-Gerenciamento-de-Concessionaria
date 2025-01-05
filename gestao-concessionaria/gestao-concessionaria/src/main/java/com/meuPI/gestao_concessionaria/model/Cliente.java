@@ -1,7 +1,12 @@
 package com.meuPI.gestao_concessionaria.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity
 public class Cliente {
 
+    @Id
     private int id;
     private String nome;
     private String cpf;
@@ -10,7 +15,12 @@ public class Cliente {
     private String telefone;
     private String email;
 
-    // Construtor
+    // Construtor sem parâmetros (necessário para o Hibernate)
+    public Cliente() {
+        // Este construtor é necessário para que o Hibernate consiga instanciar a classe
+    }
+
+    // Construtor com parâmetros, caso você precise criar clientes com dados
     public Cliente(int id, String nome, String cpf, String endereco, String cep, String telefone, String email) {
         this.id = id;
         this.nome = nome;

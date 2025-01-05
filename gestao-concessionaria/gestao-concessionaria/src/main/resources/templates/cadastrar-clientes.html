@@ -10,9 +10,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://via.placeholder.com/1920x1080'); /* Imagem de fundo */
-            background-size: cover;
-            background-position: center;
+            background-color: #2c2f38;
             color: #e1e1e1;
             border-top: 5px solid #ff9800;
             border-bottom: 5px solid #ff9800;
@@ -20,6 +18,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background-image: url('https://via.placeholder.com/1920x1080');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
         .menu-container {
             position: relative;
@@ -29,8 +31,9 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             text-align: center;
-            max-width: 900px;
+            max-width: 1000px;
             width: 100%;
+            overflow-x: auto; /* Permite a rolagem horizontal caso a tabela ultrapasse o limite de largura */
         }
         h1 {
             color: #ff9800;
@@ -55,6 +58,9 @@
         .btn:hover {
             background-color: #e6892e;
         }
+        .btn-secondary {
+            background-color: #5a5a5a;
+        }
         table {
             width: 100%;
             margin-top: 30px;
@@ -67,39 +73,65 @@
             background-color: #ff9800;
             color: white;
         }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+        .delete-btn {
+            background-color: #f44336;
+        }
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+        #confirmDeleteModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 5px;
+            color: white;
+            z-index: 9999;
+        }
+        #confirmDeleteModal button {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
-
     <div class="menu-container">
         <h1>Cadastrar Cliente</h1>
 
+        <!-- Formulário de Cadastro -->
         <form id="clientForm">
             <div class="mb-3">
                 <label class="form-label" for="nome">Nome</label>
-                <input class="form-control" id="nome" name="nome" required type="text" placeholder="Ex: João da Silva">
+                <input class="form-control" id="nome" name="nome" required type="text" placeholder="Ex: João Silva">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="email">E-mail</label>
+                <input class="form-control" id="email" name="email" required type="email" placeholder="Ex: joao@email.com">
             </div>
             <div class="mb-3">
                 <label class="form-label" for="cpf">CPF</label>
-                <input class="form-control" id="cpf" name="cpf" required type="text" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" placeholder="Ex: 123.456.789-10">
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="endereco">Endereço</label>
-                <input class="form-control" id="endereco" name="endereco" required type="text" placeholder="Ex: Rua Exemplo, 123">
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="cep">CEP</label>
-                <input class="form-control" id="cep" name="cep" required type="text" pattern="\d{5}-\d{3}" placeholder="Ex: 12345-678">
+                <input class="form-control" id="cpf" name="cpf" required type="text" placeholder="Ex: 123.456.789-00" oninput="formatarCPF(this)">
             </div>
             <div class="mb-3">
                 <label class="form-label" for="telefone">Telefone</label>
-                <input class="form-control" id="telefone" name="telefone" required type="text" placeholder="Ex: (XX) XXXXX-XXXX" pattern="^\(\d{2}\) \d{5}-\d{4}$">
+                <input class="form-control" id="telefone" name="telefone" required type="text" placeholder="Ex: (11) 99999-0000" oninput="formatarTelefone(this)">
             </div>
             <div class="mb-3">
-                <label class="form-label" for="email">Gmail</label>
-                <input class="form-control" id="email" name="email" required type="email" placeholder="Ex: email@dominio.com">
+                <label class="form-label" for="cep">CEP</label>
+                <input class="form-control" id="cep" name="cep" required type="text" placeholder="Ex: 12345-678" oninput="formatarCEP(this)">
             </div>
-            <button class="btn" type="submit">Cadastrar</button>
+            <div class="mb-3">
+                <label class="form-label" for="endereco">Endereço</label>
+                <input class="form-control" id="endereco" name="endereco" required type="text" placeholder="Ex: Rua das Flores, 123">
+            </div>
+            <button class="btn" type="submit" id="submitButton">Cadastrar</button>
         </form>
 
         <a class="btn btn-secondary" href="/" style="display:block; margin-top: 15px;">Voltar</a>
@@ -108,59 +140,168 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Nome</th>
+                    <th>E-mail</th>
                     <th>CPF</th>
-                    <th>Endereço</th>
-                    <th>CEP</th>
                     <th>Telefone</th>
-                    <th>Gmail</th>
+                    <th>CEP</th>
+                    <th>Endereço</th>
+                    <th>Ações</th>
                 </tr>
             </thead>
-            <tbody id="clientTableBody">
-                <!-- As informações serão inseridas aqui pelo JavaScript -->
-            </tbody>
+            <tbody id="clientTableBody"></tbody>
         </table>
     </div>
 
+    <!-- Modal de Confirmação -->
+    <div id="confirmDeleteModal">
+        <h4>Deseja realmente excluir este cliente?</h4>
+        <button class="btn" id="confirmDeleteBtn" onclick="confirmDelete()">Confirmar</button>
+        <button class="btn btn-secondary" onclick="cancelDelete()">Cancelar</button>
+    </div>
+
     <script>
+        let editingClientId = null;
+        let deleteClientId = null;
+
         const form = document.getElementById('clientForm');
         const tableBody = document.getElementById('clientTableBody');
-
-        let clients = [];
 
         form.addEventListener('submit', function(event) {
             event.preventDefault();
 
-            const nome = document.getElementById('nome').value;
-            const cpf = document.getElementById('cpf').value;
-            const endereco = document.getElementById('endereco').value;
-            const cep = document.getElementById('cep').value;
-            const telefone = document.getElementById('telefone').value;
-            const email = document.getElementById('email').value;
+            if (!validarCampos()) return;
 
-            const client = { nome, cpf, endereco, cep, telefone, email };
-            clients.push(client);
+            const client = {
+                nome: document.getElementById('nome').value,
+                email: document.getElementById('email').value,
+                cpf: document.getElementById('cpf').value,
+                telefone: document.getElementById('telefone').value,
+                cep: document.getElementById('cep').value,
+                endereco: document.getElementById('endereco').value,
+            };
 
-            renderTable();
-            form.reset();
+            const requestMethod = editingClientId ? 'PUT' : 'POST';
+            const apiEndpoint = editingClientId ? `/api/clientes/${editingClientId}` : '/api/clientes';
+
+            fetch(apiEndpoint, {
+                method: requestMethod,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(client)
+            })
+            .then(response => response.json())
+            .then(() => {
+                renderTable();
+                form.reset();
+                editingClientId = null;
+                document.getElementById('submitButton').textContent = 'Cadastrar';
+            })
+            .catch(error => console.error('Erro:', error));
         });
 
         function renderTable() {
-            tableBody.innerHTML = '';
-
-            clients.forEach(client => {
-                const row = document.createElement('tr');
-
-                Object.values(client).forEach(value => {
-                    const td = document.createElement('td');
-                    td.textContent = value;
-                    row.appendChild(td);
+            fetch('/api/clientes')
+                .then(response => response.json())
+                .then(clients => {
+                    tableBody.innerHTML = '';
+                    clients.forEach(client => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${client.id}</td>
+                            <td>${client.nome}</td>
+                            <td>${client.email}</td>
+                            <td>${client.cpf}</td>
+                            <td>${client.telefone}</td>
+                            <td>${client.cep}</td>
+                            <td>${client.endereco}</td>
+                        `;
+                        const actionsTd = document.createElement('td');
+                        actionsTd.innerHTML = `
+                            <div class="action-buttons">
+                                <button class="btn" onclick='preencherForm(${JSON.stringify(client)})'>Editar</button>
+                                <button class="btn delete-btn" onclick='deleteClient(${client.id})'>Deletar</button>
+                            </div>
+                        `;
+                        row.appendChild(actionsTd);
+                        tableBody.appendChild(row);
+                    });
                 });
-
-                tableBody.appendChild(row);
-            });
         }
-    </script>
 
+        function preencherForm(client) {
+            document.getElementById('nome').value = client.nome;
+            document.getElementById('email').value = client.email;
+            document.getElementById('cpf').value = client.cpf;
+            document.getElementById('telefone').value = client.telefone;
+            document.getElementById('cep').value = client.cep;
+            document.getElementById('endereco').value = client.endereco;
+
+            editingClientId = client.id;
+            document.getElementById('submitButton').textContent = 'Atualizar';
+        }
+
+        function deleteClient(id) {
+            deleteClientId = id;
+            document.getElementById('confirmDeleteModal').style.display = 'block';
+        }
+
+        function confirmDelete() {
+            fetch(`/api/clientes/${deleteClientId}`, { method: 'DELETE' })
+            .then(() => {
+                renderTable();
+                document.getElementById('confirmDeleteModal').style.display = 'none';
+            })
+            .catch(error => console.error('Erro ao deletar:', error));
+        }
+
+        function cancelDelete() {
+            deleteClientId = null;
+            document.getElementById('confirmDeleteModal').style.display = 'none';
+        }
+
+        function formatarCPF(cpf) {
+            cpf.value = cpf.value.replace(/\D/g, "");
+            cpf.value = cpf.value.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4");
+        }
+
+        function formatarTelefone(telefone) {
+            telefone.value = telefone.value.replace(/\D/g, "");
+            telefone.value = telefone.value.replace(/^(\d{2})(\d)/, "($1) $2");
+            telefone.value = telefone.value.replace(/(\d{5})(\d{4})$/, "$1-$2");
+        }
+
+        function formatarCEP(cep) {
+            cep.value = cep.value.replace(/\D/g, "");
+            cep.value = cep.value.replace(/^(\d{5})(\d{3})$/, "$1-$2");
+        }
+
+        function validarCampos() {
+            const cpf = document.getElementById('cpf').value;
+            const telefone = document.getElementById('telefone').value;
+            const cep = document.getElementById('cep').value;
+
+            const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+            const telefoneRegex = /^\(\d{2}\) \d{5}-\d{4}$/;
+            const cepRegex = /^\d{5}-\d{3}$/;
+
+            if (!cpfRegex.test(cpf)) {
+                alert('CPF inválido');
+                return false;
+            }
+            if (!telefoneRegex.test(telefone)) {
+                alert('Telefone inválido');
+                return false;
+            }
+            if (!cepRegex.test(cep)) {
+                alert('CEP inválido');
+                return false;
+            }
+            return true;
+        }
+
+        window.onload = renderTable;
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

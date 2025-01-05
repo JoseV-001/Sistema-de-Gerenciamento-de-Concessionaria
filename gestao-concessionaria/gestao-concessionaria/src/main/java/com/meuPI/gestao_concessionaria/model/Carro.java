@@ -1,6 +1,12 @@
 package com.meuPI.gestao_concessionaria.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity // Marca a classe como uma entidade JPA
 public class Carro {
+
+    @Id // Marca o campo 'id' como chave primária
     private int id;
     private String marca;
     private String modelo;

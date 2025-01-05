@@ -10,14 +10,19 @@ document.querySelector("form").addEventListener("submit", function(event) {
     let cpf = document.getElementById("cpf").value;
     let endereco = document.getElementById("endereco").value;
 
-    // Validar se todos os campos foram preenchidos
+    // Validar se todos os campos de veículo foram preenchidos
     if (!marca || !modelo || !ano || !preco) {
-        event.preventDefault();
+        event.preventDefault(); // Impede o envio do formulário
         alert("Por favor, preencha todos os campos do veículo!");
+        return; // Interrompe a execução
     }
 
+    // Validar se todos os campos de cliente foram preenchidos
     if (!nome || !cpf || !endereco) {
-        event.preventDefault();
+        event.preventDefault(); // Impede o envio do formulário
         alert("Por favor, preencha todos os campos do cliente!");
+        return; // Interrompe a execução
     }
+
+    // Caso tudo esteja ok, o formulário será enviado normalmente
 });
