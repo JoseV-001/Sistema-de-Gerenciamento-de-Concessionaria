@@ -86,9 +86,9 @@ Siga os passos abaixo para configurar e executar a aplicação em seu ambiente l
 * MySQL 8.0 (ou um servidor compatível).
 * Uma IDE de sua preferência (ex: IntelliJ, VS Code, NetBeans).
 
-###👨‍💻 Autor
-*Desenvolvido por José Victor.
-*E-mail: victojose46@gmail.com
+## 👨‍💻 Autor
+* Desenvolvido por José Victor.
+* E-mail: victojose46@gmail.com
 
 ### 1. Clonar o Repositório
 
