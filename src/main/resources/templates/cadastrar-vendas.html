@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+    <head>
+    <th:block th:replace="~{fragments :: header('Cadastro de Vendas')}"></th:block>
+</head>
+<body>
+    <nav th:replace="~{fragments :: navbar}"></nav>
+    <main class="container container-80 my-4">
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header">Cadastrar Nova Venda</div>
+                    <div class="card-body p-4">
+                        <form th:action="@{/concessionaria/salvar-venda}" method="post">
+                            <div class="mb-3 text-start"><label for="carroId" class="form-label">Carro Disponível</label><select class="form-select" id="carroId" name="carroId" required><option value="" selected disabled>Selecione um carro</option><option th:each="carro : ${carros}" th:value="${carro.id}" th:text="${carro.marca} + ' ' + ${carro.modelo} + ' (' + ${carro.ano} + ')'"></option></select></div>
+                            <div class="mb-3 text-start"><label for="clienteId" class="form-label">Cliente</label><select class="form-select" id="clienteId" name="clienteId" required><option value="" selected disabled>Selecione um cliente</option><option th:each="cliente : ${clientes}" th:value="${cliente.id}" th:text="${cliente.nome} + ' - ' + ${cliente.cpf}"></option></select></div>
+                            <button class="btn btn-primary" type="submit">Cadastrar Venda</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Vendas Realizadas</div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10%;">ID Venda</th>
+                                        <th style="width: 25%;">Carro</th>
+                                        <th style="width: 25%;">Cliente</th>
+                                        <th style="width: 15%;">Data</th>
+                                        <th style="width: 15%;">Valor</th>
+                                        <th style="width: 10%;">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="venda : ${vendas}">
+                                        <td th:text="${venda.id}"></td>
+                                        <td th:text="${venda.carro != null ? venda.carro.marca + ' ' + venda.carro.modelo : 'N/A'}"></td>
+                                        <td th:text="${venda.cliente != null ? venda.cliente.nome : 'N/A'}"></td>
+                                        <td th:text="${#dates.format(venda.dataVenda, 'dd/MM/yyyy HH:mm')}"></td>
+                                        <td th:text="'R$ ' + ${#numbers.formatDecimal(venda.valorVenda, 1, 'POINT', 2, 'COMMA')}"></td>
+                                        <td>
+                                            <div class="d-flex justify-content-center">
+                                                <form th:action="@{/concessionaria/remover-venda}" method="post">
+                                                    <input type="hidden" name="id" th:value="${venda.id}" />
+                                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja cancelar esta venda? O carro voltará a ficar disponível.');">Cancelar</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{fragments :: footer}"></footer>
+<th:block th:replace="~{fragments :: scripts}"></th:block>
+</body>
+</html>

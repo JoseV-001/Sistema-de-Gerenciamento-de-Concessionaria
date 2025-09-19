@@ -1,0 +1,147 @@
+/* Definição de Variáveis de Cor para o Tema */
+:root {
+    --cor-primaria: #3498db;
+    --cor-primaria-hover: #2980b9; 
+    --cor-fundo: #121212;
+    --cor-painel: #1e1e1e;
+    --cor-texto: #e0e0e0;
+    --cor-texto-placeholder: #888;
+    --cor-borda: #444;
+    --cor-delete: #dc3545;
+    --cor-delete-hover: #b02a37;
+}
+
+/* --- ESTRUTURA GERAL E LAYOUT --- */
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--cor-texto);
+    
+    /* ---  IMAGEM DE FUNDO E EFEITO --- */
+    background-image: 
+        /* 1. Gradiente escuro para garantir a legibilidade do texto */
+        linear-gradient(rgba(18, 18, 18, 0.85), rgba(18, 18, 18, 0.85)),
+        /* 2. A imagem de fundo do carro */
+        url('/images/carro-tempestade-fundo.jpg.png');
+    
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* --- Barra de Navegação --- */
+.navbar {
+    background-color: rgba(30, 30, 30, 0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--cor-borda);
+}
+.navbar-brand {
+    font-weight: 700;
+    color: var(--cor-primaria) !important;
+}
+.nav-link {
+    font-weight: 500;
+}
+
+/* --- Cards para Conteúdo --- */
+.card {
+    background-color: var(--cor-painel);
+    border: 1px solid var(--cor-borda);
+    border-radius: 0.5rem;
+}
+.card-header {
+    background-color: rgba(0,0,0,0.2);
+    border-bottom: 1px solid var(--cor-borda);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--cor-primaria);
+}
+
+/* --- Tabelas --- */
+.table {
+    --bs-table-bg: transparent;
+    --bs-table-striped-bg: rgba(255, 255, 255, 0.05);
+    --bs-table-color: var(--cor-texto);
+    border-color: var(--cor-borda);
+}
+.table thead th {
+    background-color: var(--cor-primaria);
+    color: #fff;
+    border-color: var(--cor-primaria);
+}
+.table td, .table th {
+    color: var(--cor-texto);
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.table .action-buttons {
+    min-width: 120px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+}
+
+/* --- Formulários --- */
+.form-control, .form-select {
+    background-color: #333;
+    border: 1px solid var(--cor-borda);
+    color: var(--cor-texto);
+}
+.form-control:focus, .form-select:focus {
+    background-color: #333;
+    border-color: var(--cor-primaria);
+    box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25); /* Sombra do foco em azul */
+    color: var(--cor-texto);
+}
+.form-control::placeholder {
+  color: var(--cor-texto-placeholder);
+  opacity: 1;
+}
+
+/* --- Botões Padronizados --- */
+.btn {
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+.btn-primary {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}
+.btn-primary:hover {
+    background-color: var(--cor-primaria-hover);
+    border-color: var(--cor-primaria-hover);
+}
+.btn-danger {
+    background-color: var(--cor-delete);
+    border-color: var(--cor-delete);
+}
+.btn-danger:hover {
+    background-color: var(--cor-delete-hover);
+    border-color: var(--cor-delete-hover);
+}
+
+/* --- Rodapé --- */
+.footer {
+    background-color: var(--cor-painel);
+    border-top: 1px solid var(--cor-borda);
+    color: #888;
+}
+
+/* --- Contêiner customizado --- */
+.container-80 {
+    max-width: 80% !important;
+}

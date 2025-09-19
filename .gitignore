@@ -1,33 +1,22 @@
-HELP.md
+# Arquivo de configurações locais com senhas
+application.properties
+
+# Arquivos compilados do Maven
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# Arquivos de log
+*.log
 
-### IntelliJ IDEA ###
-.idea
-*.iws
+# Arquivos de configuração de IDEs
+.idea/
 *.iml
-*.ipr
-
-### NetBeans ###
-/nbproject/private/
+*.nbproject/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
-
-### VS Code ###
+.settings
+.springBeans
+.sts4-cache
 .vscode/

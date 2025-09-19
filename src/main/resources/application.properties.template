@@ -1,0 +1,23 @@
+# Nome da aplicação
+spring.application.name=gestao-concessionaria
+
+# Configuração da conexão com o banco de dados MySQL
+spring.datasource.url=jdbc:mysql://localhost:3306/gestao_concessionaria
+spring.datasource.username=root
+spring.datasource.password= # COLOQUE SUA SENHA DO MYSQL AQUI
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# Configuração do JPA
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+# Configurações de log para debug
+logging.level.org.springframework.web=DEBUG
+logging.level.org.springframework.boot=DEBUG
+logging.level.org.hibernate=INFO
+
+spring.thymeleaf.prefix=classpath:/templates/
+spring.thymeleaf.suffix=.html
+spring.thymeleaf.mode=HTML
