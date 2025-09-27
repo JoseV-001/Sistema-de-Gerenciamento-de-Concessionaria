@@ -45,11 +45,6 @@ O sistema foi projetado com uma interface limpa e funcional, dividida em três m
 | ![Tela de Veículos](./screenshots/tela-veiculos.png) | ![Tela de Vendas](./screenshots/tela-vendas.png) |
 
 ---
-## 🎥 Video Do Sistema em Ação
-
-[![Demonstração do Projeto em Ação](https://img.youtube.com/vi/inUd3DqQBGg/0.jpg)](https://www.youtube.com/watch?v=inUd3DqQBGg)
-
----
 ## 🛠️ Tecnologias Utilizadas
 
 Este projeto foi construído com as seguintes tecnologias:
